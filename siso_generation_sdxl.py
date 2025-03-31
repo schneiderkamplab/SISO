@@ -886,6 +886,7 @@ def main(args):
                 feature_extractor_transforms,
                 image,
                 ir_subject_image_features,
+                device=accelerator.device,
             )
             ir_losses.append(ir_loss.detach().item())
             loss += args.ir_features_weight * ir_loss
