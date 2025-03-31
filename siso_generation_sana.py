@@ -619,7 +619,7 @@ def main(args):
     # Handle the repository creation
     if accelerator.is_main_process:
         if args.output_dir is not None:
-            os.makedirs(args.output_dir, exist_ok=True)
+            os.makedirs(f"{args.output_dir}/sana", exist_ok=True)
 
     # Load the tokenizer
     tokenizer = AutoTokenizer.from_pretrained(

@@ -506,7 +506,7 @@ def main(args):
     # Handle the repository creation
     if accelerator.is_main_process:
         if args.output_dir is not None:
-            os.makedirs(args.output_dir, exist_ok=True)
+            os.makedirs(f"{args.output_dir}/sdxl", exist_ok=True)
 
     # import correct text encoder classes
     text_encoder_cls_one = import_model_class_from_model_name_or_path(
