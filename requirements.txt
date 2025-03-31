@@ -1,0 +1,10 @@
+transformers
+accelerate
+peft
+diffusers
+timm
+kornia
+matplotlib
+pytorch-lightning
+protobuf
+sentencepiece
