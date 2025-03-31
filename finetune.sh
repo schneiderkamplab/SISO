@@ -9,7 +9,6 @@ WEIGHTS="$DIR/$TYPE"
 python siso_generation_${TYPE}.py \
   --subject_image_path "$IMAGE" \
   --prompt "$PROMPT" \
-  --train_text_encode \
   --output_dir $DIR \
   --lr_warmup_steps 0 \
   --lr_scheduler constant \
