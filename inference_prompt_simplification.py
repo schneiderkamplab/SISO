@@ -26,6 +26,7 @@ def get_args():
     parser.add_argument("--prompt", type=str, required=True)
     parser.add_argument("--guidance_scale", type=float, default=0.0)
     parser.add_argument("--output_path", type=str, default="output.png")
+    parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--device_id", type=str, default="0")
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
@@ -33,7 +34,7 @@ def get_args():
     
 def main():
     args = get_args()
-    device = torch.device(f"cuda:{args.device_id}")
+    device = torch.device(f"{args.device}:{args.device_id}") if torch.cuda.is_available() else torch.device(args.device)
     pipeline = get_pipeline(args.model_name, device)
     pipeline.load_lora_weights(args.lora_weights_path)
 

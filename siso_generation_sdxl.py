@@ -481,6 +481,7 @@ def main(args):
         project_config=accelerator_project_config,
         kwargs_handlers=[kwargs],
     )
+    backend = torch.mps if torch.mps.is_available() else torch.cuda
 
     # Make one log on every process with the configuration for debugging.
     logging.basicConfig(
@@ -815,7 +816,7 @@ def main(args):
 
     dino_subject_image_input = dino_utils.prepare_for_dino(
         subject_image_arr, transforms_configs
-    ).cuda()
+    ).to(accelerator.device)
     with torch.no_grad():
         dino_subject_image_features = dino_utils.get_dino_features(
             dino, dino_subject_image_input
@@ -979,7 +980,7 @@ def main(args):
     best_image.save(f"{args.output_dir}/result.png")
 
     del pipeline
-    torch.cuda.empty_cache()
+    backend.empty_cache()
 
     if args.save_weights:
         Path(args.weights_output_dir).mkdir(

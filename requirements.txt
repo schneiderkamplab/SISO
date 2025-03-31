@@ -8,3 +8,4 @@ matplotlib
 pytorch-lightning
 protobuf
 sentencepiece
+datasets

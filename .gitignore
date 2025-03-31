@@ -1,3 +1,5 @@
 .vscode/
 logs/
 weights/
+data/
+__pycache__
