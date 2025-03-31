@@ -1328,7 +1328,7 @@ def main(args):
                 break
 
     # save best image
-    best_image.save(f"{args.output_dir}/result.png")
+    best_image.save(f"{args.output_dir}/flux/result.png")
 
     del pipeline
     backend.empty_cache()

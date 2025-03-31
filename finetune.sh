@@ -25,5 +25,4 @@ python siso_generation_${TYPE}.py \
   --save_weights \
   --weights_output_dir $WEIGHTS \
   --ir_features_path "data/ir_features.pth" \
-  --mixed_precision bf16 \
   $@
