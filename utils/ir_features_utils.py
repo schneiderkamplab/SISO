@@ -34,7 +34,7 @@ class AddMarginProduct(torch.nn.Module):
 
         phi = cosine - self.m
         # --------------------------- convert label to one-hot ---------------------------
-        one_hot = torch.zeros(cosine.size(), device="cuda")
+        one_hot = torch.zeros(cosine.size(), device=self.weight.device)
 
         one_hot.scatter_(1, label.view(-1, 1).long(), 1)
 
@@ -113,19 +113,19 @@ def get_differentiable_transforms(curr_transforms):
     )
 
 
-def get_ir_features(model, transforms, image):
+def get_ir_features(model, transforms, image, device):
     model.eval()
     image = transforms(image)
-    image = image.to("cuda")
+    image = image.to(device)
     features = model(image)
     return features
 
 
 def get_ir_features_sample_cos_sim(
-    model, transforms, query_image_inputs, key_image_inputs
+    model, transforms, query_image_inputs, key_image_inputs, device
 ):
-    query_image_features = get_ir_features(model, transforms, query_image_inputs)
-    key_image_features = get_ir_features(model, transforms, key_image_inputs)
+    query_image_features = get_ir_features(model, transforms, query_image_inputs, device)
+    key_image_features = get_ir_features(model, transforms, key_image_inputs, device)
     cos_sim = torch.nn.functional.cosine_similarity(
         query_image_features, key_image_features, dim=1
     )
@@ -133,7 +133,7 @@ def get_ir_features_sample_cos_sim(
 
 
 def get_ir_features_negative_mean_cos_sim(
-    model, transforms, query_image, key_images_features
+    model, transforms, query_image, key_images_features, device
 ):
     cos_sims = []
     # if key_images_features is not a list, convert it to a list
@@ -143,7 +143,7 @@ def get_ir_features_negative_mean_cos_sim(
         key_image_fearures.detach().clone()
         for key_image_fearures in key_images_features
     ]
-    query_image_features = get_ir_features(model, transforms, query_image)
+    query_image_features = get_ir_features(model, transforms, query_image, device)
     for key_image_features in key_images_features_clones:
         cos_sim = torch.nn.functional.cosine_similarity(
             query_image_features.squeeze(), key_image_features.squeeze(), dim=0

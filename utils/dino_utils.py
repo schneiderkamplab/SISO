@@ -4,9 +4,9 @@ import kornia.geometry.transform as KTF
 import kornia.enhance as KE
 
 
-def get_model_and_transforms_configs(model_name: str):
+def get_model_and_transforms_configs(model_name: str, device: str | torch.device = "cuda"):
     model = timm.create_model(model_name, pretrained=True, num_classes=0)
-    model = model.to("cuda")
+    model = model.to(device)
     model.eval()
     data_config = timm.data.resolve_model_data_config(model)
     transforms = timm.data.create_transform(**data_config, is_training=False)
