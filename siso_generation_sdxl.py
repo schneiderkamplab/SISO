@@ -824,7 +824,7 @@ def main(args):
 
     with torch.no_grad():
         ir_subject_image_features = ir_features_utils.get_ir_features(
-            ir_feature_extractor, feature_extractor_transforms, subject_image_arr
+            ir_feature_extractor, feature_extractor_transforms, subject_image_arr, device=accelerator.device
         )
 
     ir_losses = []
