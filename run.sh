@@ -1,0 +1,21 @@
+export PYTORCH_ENABLE_MPS_FALLBACK=1
+python siso_generation_flux.py \
+  --subject_image_path example_images/dog_subject.png \
+  --prompt "a photo of a dog" \
+  --train_text_encode \
+  --output_dir logs/dog_generation \
+  --lr_warmup_steps 0 \
+  --lr_scheduler constant \
+  --train_batch_size 1 \
+  --resolution 512 \
+  --pretrained_model_name_or_path black-forest-labs/FLUX.1-schnell \
+  --num_train_epochs 50 \
+  --early_stopping_threshold_percentage 3 \
+  --early_stopping_max_count 7 \
+  --num_inference_steps 1 \
+  --learning_rate 2e-4 \
+  --seed=42 \
+  --save_weights \
+  --weights_output_dir weights/dog \
+  --ir_features_path "third_party/IR_dependencies/arcface all vith 18 last and middle first 3 280 all 3 290 first 1 overlap last 6 middle 6 first 3 dropout.pth" \
+  --mixed_precision no
